@@ -1,8 +1,10 @@
-from library.maze import Maze, pngToList
+from library.maze import Maze, genMazeList, listToPng
 
 FILENAME = 'Example/maze.png'
+SAVEFILENAME = 'Example/save.png'
 
-maze = Maze(pngToList(FILENAME))
+#maze = Maze(pngToList(FILENAME))
+maze  = Maze(genMazeList(32))
 
 while not maze.isAWin():
     moves    = maze.allPossibleMoves()
@@ -24,8 +26,13 @@ while not maze.isAWin():
 
         print()
         print('chose: ', end='')
-        selected = int(input())
-        
+        selected = input()
+    
+        if selected == 'save':
+            listToPng(maze.maze, SAVEFILENAME)
+            selected = '0'
+
+        selected = int(selected)
     maze.move(list(moves.keys())[selected])
 
 print('congrats')
